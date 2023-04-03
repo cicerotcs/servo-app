@@ -1,11 +1,11 @@
-require("dotenv").config()
+require("dotenv").config();
 
 let missing = ["PORT", "DATABASE_URL", "MAPS_API_KEY"].filter(
-  key => process.env[key] === undefined
-)
+  (key) => process.env[key] === undefined
+);
 
 if (missing.length > 0) {
-  throw Error(`missing environment variables for ${missing.join(", ")}`)
+  throw Error(`missing environment variables for ${missing.join(", ")}`);
 }
 
 module.exports = {
@@ -13,5 +13,5 @@ module.exports = {
   db: {
     connectionString: process.env.DATABASE_URL,
   },
-  apiKey: process.env.MAPS_API_KEY
-}
+  apiKey: process.env.MAPS_API_KEY,
+};
