@@ -2,7 +2,6 @@ const express = require("express");
 const db = require("./db/connect");
 const Stations = require("./models/stations");
 const Owners = require("./models/owners");
-
 const app = express();
 
 app.set("view engine", "ejs");
