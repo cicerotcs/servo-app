@@ -1,11 +1,39 @@
 let map;
 
 async function initMap() {
-  //@ts-ignore
-  const { Map } = await google.maps.importLibrary("maps");
 
-  map = new Map(document.getElementById("map"), {
-    center: { lat: -34.397, lng: 150.644 },
-    zoom: 8,
+  const myLatLng = { lat: -25.363, lng: 131.044 };
+  const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 4,
+    center: myLatLng,
   });
+
+  fetchPetrolStations()
+    .then(stations => {
+      stations.forEach(station => {
+        const myLatLng = { lat: Number(station[`latitude`]), lng: Number(station[`longitude`]) };
+    
+        let marker = new google.maps.Marker({
+          position: myLatLng,
+          map,
+          animation: google.maps.Animation.DROP,
+        });
+
+        var label = new google.maps.InfoWindow({
+          content: '<div class=marker-label><strong>'+station.name+'</strong>' + '<br/>' + station.address + '</div>', 
+        });
+        marker.addListener('mouseover', function() {
+          label.open(map, this);
+        });
+        marker.addListener('mouseout', function() {
+          label.close();
+        });
+      });
+    })
+}
+
+
+
+function fetchPetrolStations() {
+  return axios.get(`/api/stations/all`).then(res => res.data)   
 }

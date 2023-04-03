@@ -112,12 +112,12 @@
         </section>
       </aside>
     </div>
-    <section class="maps-script"></section>
-    <script
-      async
-      src="https://maps.googleapis.com/maps/api/js?key=<%= apiKey %>&callback=initMap"
-    ></script>
-    <script src="/map_api.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <script async
+    src="https://maps.googleapis.com/maps/api/js?key=<%= apiKey %>&callback=initMap"></script>
+    
+<script src="/map_api.js"></script>
   </body>
 </html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
