@@ -13,15 +13,23 @@ async function initMap() {
       stations.forEach(station => {
         const myLatLng = { lat: Number(station[`latitude`]), lng: Number(station[`longitude`]) };
     
-        new google.maps.Marker({
+        let marker = new google.maps.Marker({
           position: myLatLng,
           map,
-          // title: "Hello World!",
+          animation: google.maps.Animation.DROP,
+        });
+
+        var label = new google.maps.InfoWindow({
+          content: '<div class=marker-label><strong>'+station.name+'</strong>' + '<br/>' + station.address + '</div>', 
+        });
+        marker.addListener('mouseover', function() {
+          label.open(map, this);
+        });
+        marker.addListener('mouseout', function() {
+          label.close();
         });
       });
     })
-
-
 }
 
 
