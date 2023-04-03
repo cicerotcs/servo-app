@@ -106,3 +106,7 @@ main {
   display: flex;
   justify-content: space-evenly;
 }
+
+#map {
+  width: 100%; /* The width is the width of the web page */
+}

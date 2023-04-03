@@ -71,7 +71,7 @@
           <p>@ 2023...</p>
         </section>
       </aside>
-      <main>MAP</main>
+      <main id="map"></main>
       <aside class="right-column">
         <section class="date mobile">
           <span>img</span>
@@ -112,5 +112,12 @@
         </section>
       </aside>
     </div>
+    <section class="maps-script">
+
+    </section>
+    <script async
+    src="https://maps.googleapis.com/maps/api/js?key=<%= apiKey %>&callback=initMap">
+</script>
+<script src="/map_api.js"></script>
   </body>
 </html>

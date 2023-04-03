@@ -8,8 +8,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+
+
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("index", {apiKey: process.env.API_KEY});
 });
 
 const port = process.env.PORT || 8080;
