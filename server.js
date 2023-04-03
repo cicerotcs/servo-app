@@ -1,6 +1,7 @@
 const express = require("express");
 const db = require("./db/connect");
 const Stations = require("./models/stations");
+const Owners = require("./models/owners");
 
 const app = express();
 
@@ -15,6 +16,11 @@ app.get("/", (req, res) => {
 
 app.get("/api/stations/all", async (req, res) => {
   const data = await Stations.all();
+  res.json(data);
+});
+
+app.get("/api/owners", async (req, res) => {
+  const data = await Owners.owners();
   res.json(data);
 });
 
