@@ -75,7 +75,7 @@
       <aside class="right-column">
         <section class="date mobile">
           <span>img</span>
-          <h3>weds 15:30 pm</h3>
+          <h3></h3>
         </section>
         <section class="center-location">
           <h2>map center location</h2>
@@ -112,12 +112,19 @@
         </section>
       </aside>
     </div>
-    <section class="maps-script">
-
-    </section>
-    <script async
-    src="https://maps.googleapis.com/maps/api/js?key=<%= apiKey %>&callback=initMap">
-</script>
-<script src="/map_api.js"></script>
+    <section class="maps-script"></section>
+    <script
+      async
+      src="https://maps.googleapis.com/maps/api/js?key=<%= apiKey %>&callback=initMap"
+    ></script>
+    <script src="/map_api.js"></script>
   </body>
 </html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+<script>
+  const realTime = document.querySelector(".date h3");
+
+  setInterval(() => {
+    realTime.textContent = moment().format("dddd, h:mm:ss a");
+  }, 1000);
+</script>
