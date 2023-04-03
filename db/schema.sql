@@ -1,3 +1,5 @@
+CREATE DATABASE petrol_map;
+
 CREATE TABLE petrol_station (
     id serial PRIMARY KEY,
     object_id integer,
