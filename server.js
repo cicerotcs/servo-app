@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.get("/", (req, res) => {
-  res.render("index", { apiKey: process.env.MAPS_API_KEY });
+  res.render("index", { apiKey: process.env.MAPS_API_KEY, commodityKey: process.env.COMMODITIES_API_KEY });
 });
 
 app.get("/api/stations/all", async (req, res) => {
@@ -33,6 +33,10 @@ app.get("/api/stats", async (req, res) => {
   const data = await Stats.returnStats();
   res.json(data);
 });
+
+app.get(`/keys/commodity`, async (req, res) => {
+  res.json({commodityKey: process.env.COMMODITIES_API_KEY})
+})
 
 const port = process.env.PORT || 8080;
 

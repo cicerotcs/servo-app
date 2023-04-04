@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-let missing = ["PORT", "DATABASE_URL", "MAPS_API_KEY"].filter(
+let missing = ["PORT", "DATABASE_URL", "MAPS_API_KEY", `COMMODITIES_API_KEY`].filter(
   (key) => process.env[key] === undefined
 );
 
