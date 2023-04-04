@@ -11,12 +11,21 @@ async function initMap() {
     center: myLatLng,
   });
 
+<<<<<<< HEAD
   map.addListener('drag', function() {
     lat.textContent = `Lat: ${map.getCenter().lat()}`
     lng.textContent = `Lng: ${map.getCenter().lng()}`
   })
 
 
+=======
+  map.addListener(`drag`, () => {
+    let center = map.getCenter() 
+    console.log(center.lat());
+    console.log(center.lng());
+  })
+
+>>>>>>> de13ce6 (add grids to css columns)
   fetchPetrolStations()
     .then(stations => {
       stations.forEach(station => {
@@ -28,14 +37,15 @@ async function initMap() {
           animation: google.maps.Animation.DROP,
         });
 
-        var label = new google.maps.InfoWindow({
+        var info = new google.maps.InfoWindow({
           content: '<div class=marker-label><strong>'+station.name+'</strong>' + '<br/>' + station.address + '</div>', 
         });
         marker.addListener('mouseover', function() {
-          label.open(map, this);
+          info.open(map, this)
+
         });
         marker.addListener('mouseout', function() {
-          label.close();
+          info.close()
         });
       });
     })
