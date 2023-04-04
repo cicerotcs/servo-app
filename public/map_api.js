@@ -1,4 +1,6 @@
 let map;
+const lat = document.querySelector('.lat')
+const lng = document.querySelector('.lng')
 
 async function initMap() {
 
@@ -7,6 +9,12 @@ async function initMap() {
     zoom: 4,
     center: myLatLng,
   });
+
+  map.addListener('drag', function() {
+    lat.textContent = `Lat: ${map.getCenter().lat()}`
+    lng.textContent = `Lng: ${map.getCenter().lng()}`
+  })
+
 
   fetchPetrolStations()
     .then(stations => {
