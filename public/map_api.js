@@ -4,9 +4,10 @@ const lng = document.querySelector('.lng')
 
 async function initMap() {
 
-  const myLatLng = { lat: -25.363, lng: 131.044 };
+  const myLatLng = { lat: -38.237589, lng: 146.394618 };
   const map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 4,
+    zoom: 13,
+    minZoom: 10,
     center: myLatLng,
   });
 
@@ -27,14 +28,15 @@ async function initMap() {
           animation: google.maps.Animation.DROP,
         });
 
-        var label = new google.maps.InfoWindow({
+        var info = new google.maps.InfoWindow({
           content: '<div class=marker-label><strong>'+station.name+'</strong>' + '<br/>' + station.address + '</div>', 
         });
         marker.addListener('mouseover', function() {
-          label.open(map, this);
+          info.open(map, this)
+
         });
         marker.addListener('mouseout', function() {
-          label.close();
+          info.close()
         });
       });
     })
