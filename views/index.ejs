@@ -88,43 +88,52 @@
         </section>
         <section class="nearest">
           <h2>Nearest</h2>
-          <div class="box-nearest">
-            <span>img</span>
-            <div>
-              <p>caltex 1018m</p>
-              <p>582-586 south road</p>
-            </div>
-          </div>
-          <div class="box-nearest">
-            <span>img</span>
-            <div>
-              <p>caltex 1018m</p>
-              <p>582-586 south road</p>
-            </div>
-          </div>
-          <div class="box-nearest">
-            <span>img</span>
-            <div>
-              <p>caltex 1018m</p>
-              <p>582-586 south road</p>
-            </div>
-          </div>
         </section>
       </aside>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
-    <script async
-    src="https://maps.googleapis.com/maps/api/js?key=<%= apiKey %>&callback=initMap"></script>
-    
-<script src="/map_api.js"></script>
+    <script
+      async
+      src="https://maps.googleapis.com/maps/api/js?key=<%= apiKey %>&callback=initMap"
+    ></script>
+
+    <script src="/map_api.js"></script>
   </body>
 </html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 <script>
   const realTime = document.querySelector(".date h3");
+  const nearestSection = document.querySelector(".nearest");
 
   setInterval(() => {
     realTime.textContent = moment().format("dddd, h:mm:ss a");
   }, 1000);
+
+  function renderStations(station) {
+    const box = `
+    <div class="box-nearest">
+      <img src="/assets/logos/${station.owner
+        .toLowerCase()
+        .replace(
+          /[" "]/g,
+          "-"
+        )}.png" alt="" onerror="this.src='/assets/logos/default.png';">
+          <div>
+            <p>${station.name}</p>
+            <p>${station.address}</p>
+          </div>
+    </div>
+    `;
+    nearestSection.innerHTML += box;
+  }
+
+  async function fetchStations() {
+    const { data } = await axios.get("/api/stations/all");
+    data.slice(0, 10).forEach((station) => {
+      renderStations(station);
+    });
+  }
+
+  fetchStations();
 </script>

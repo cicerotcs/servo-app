@@ -104,7 +104,14 @@ main {
 
 .box-nearest {
   display: flex;
-  justify-content: space-evenly;
+  border: 1px solid #ccc;
+}
+
+.box-nearest img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  margin: 0 30px;
 }
 
 #map {
