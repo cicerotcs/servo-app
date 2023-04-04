@@ -11,21 +11,12 @@ async function initMap() {
     center: myLatLng,
   });
 
-<<<<<<< HEAD
   map.addListener('drag', function() {
     lat.textContent = `Lat: ${map.getCenter().lat()}`
     lng.textContent = `Lng: ${map.getCenter().lng()}`
   })
 
 
-=======
-  map.addListener(`drag`, () => {
-    let center = map.getCenter() 
-    console.log(center.lat());
-    console.log(center.lng());
-  })
-
->>>>>>> de13ce6 (add grids to css columns)
   fetchPetrolStations()
     .then(stations => {
       stations.forEach(station => {
