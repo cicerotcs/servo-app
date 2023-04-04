@@ -3,6 +3,7 @@ const db = require("./db/connect");
 const Stations = require("./models/stations");
 const Owners = require("./models/owners");
 const Random = require("./models/random");
+const Stats = require("./models/stats");
 const app = express();
 
 app.set("view engine", "ejs");
@@ -28,6 +29,10 @@ app.get(`/api/stations/random`, async (req, res) => {
   const data = await Random.random();
   res.json(data)
 })
+app.get("/api/stats", async (req, res) => {
+  const data = await Stats.returnStats();
+  res.json(data);
+});
 
 const port = process.env.PORT || 8080;
 
