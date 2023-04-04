@@ -27,19 +27,12 @@
         </section>
         <section class="stats desktop">
           <h2>Stats</h2>
-          <p>total station: 5240</p>
-          <p>total owners: 10</p>
-          <div class="box-stats">
-            <span>Caltex</span>
-            <span>1502</span>
-          </div>
-          <div class="box-stats">
-            <span>Bp</span>
-            <span>1502</span>
-          </div>
-          <div class="box-stats">
-            <span>Shell</span>
-            <span>1502</span>
+          <p>Total Stations: <%= stats.total_stations %></p>
+          <p>Total Owners: <%= stats.total_owners %></p>
+          <div id="owner-stats">
+            <% stats.top_stations.forEach(owner => { %>
+              <div class="box-stats"><span><%= owner.owner %></span><span><%= owner.count %></span></div>
+            <% }) %>
           </div>
         </section>
         <section class="latest-prices desktop">
