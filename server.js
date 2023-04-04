@@ -4,6 +4,7 @@ const Stations = require("./models/stations");
 const Owners = require("./models/owners");
 const Random = require("./models/random");
 const Stats = require("./models/stats");
+const Bounds = require("./models/bounds");
 const app = express();
 
 app.set("view engine", "ejs");
@@ -33,6 +34,15 @@ app.get("/api/stats", async (req, res) => {
   const data = await Stats.returnStats();
   res.json(data);
 });
+
+app.get(`/api/stations/bounds`, async (req, res) => {
+  const north = req.query.n
+  const south = req.query.s
+  const east = req.query.e
+  const west = req.query.w
+  const data = await Bounds.all(north, south, east, west)
+  res.json(data)
+})
 
 app.get(`/keys/commodity`, async (req, res) => {
   res.json({commodityKey: process.env.COMMODITIES_API_KEY})
