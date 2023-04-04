@@ -1,4 +1,3 @@
-let map;
 const lat = document.querySelector(".lat");
 const lng = document.querySelector(".lng");
 
@@ -22,12 +21,32 @@ async function initMap() {
       center: myLatLng,
     });
 
+    let markers = [];
+
     map.addListener("drag", function () {
       lat.textContent = `Lat: ${map.getCenter().lat()}`;
       lng.textContent = `Lng: ${map.getCenter().lng()}`;
     });
 
-    fetchPetrolStations().then((stations) => {
+    map.addListener("zoom_changed", function () {
+      fetchPetrolStations().then((stations) => {
+        markers.forEach((marker) => {
+          marker.setMap(null);
+        });
+        template(stations);
+      });
+    });
+    map.addListener("dragend", function () {
+      fetchPetrolStations().then((stations) => {
+        markers.forEach((marker) => {
+          marker.setMap(null);
+        });
+
+        template(stations);
+      });
+    });
+
+    function template(stations) {
       stations.forEach((station) => {
         const myLatLng = {
           lat: Number(station[`latitude`]),
@@ -68,6 +87,7 @@ async function initMap() {
             map,
             animation: google.maps.Animation.DROP,
             icon: icon,
+            optimized: true,
           });
 
           var info = new google.maps.InfoWindow({
@@ -85,9 +105,11 @@ async function initMap() {
           marker.addListener("mouseout", function () {
             info.close();
           });
+
+          markers.push(marker);
         }
       });
-    });
+    }
   }
 
   function error(err) {
