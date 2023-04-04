@@ -1,49 +1,102 @@
 let map;
-const lat = document.querySelector('.lat')
-const lng = document.querySelector('.lng')
+const lat = document.querySelector(".lat");
+const lng = document.querySelector(".lng");
 
 async function initMap() {
+  const options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0,
+  };
 
-  const myLatLng = { lat: -38.237589, lng: 146.394618 };
-  const map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 13,
-    minZoom: 10,
-    center: myLatLng,
-  });
+  function success(pos) {
+    let coordinates = pos.coords;
+    let myLatLng = {
+      lat: parseFloat(coordinates.latitude),
+      lng: parseFloat(coordinates.longitude),
+    };
 
-  map.addListener('drag', function() {
-    lat.textContent = `Lat: ${map.getCenter().lat()}`
-    lng.textContent = `Lng: ${map.getCenter().lng()}`
-  })
+    const map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 13,
+      minZoom: 10,
+      center: myLatLng,
+    });
 
+    map.addListener("drag", function () {
+      lat.textContent = `Lat: ${map.getCenter().lat()}`;
+      lng.textContent = `Lng: ${map.getCenter().lng()}`;
+    });
 
-  fetchPetrolStations()
-    .then(stations => {
-      stations.forEach(station => {
-        const myLatLng = { lat: Number(station[`latitude`]), lng: Number(station[`longitude`]) };
-    
-        let marker = new google.maps.Marker({
-          position: myLatLng,
-          map,
-          animation: google.maps.Animation.DROP,
-        });
+    fetchPetrolStations().then((stations) => {
+      stations.forEach((station) => {
+        const myLatLng = {
+          lat: Number(station[`latitude`]),
+          lng: Number(station[`longitude`]),
+        };
 
-        var info = new google.maps.InfoWindow({
-          content: '<div class=marker-label><strong>'+station.name+'</strong>' + '<br/>' + station.address + '</div>', 
-        });
-        marker.addListener('mouseover', function() {
-          info.open(map, this)
+        const image = new Image();
 
-        });
-        marker.addListener('mouseout', function() {
-          info.close()
-        });
+        image.src = `/assets/logos/${station.owner
+          .toLowerCase()
+          .replace(/[" "]/g, "-")}.png`;
+
+        let icon = {};
+
+        image.onload = function () {
+          icon = {
+            url: image.src,
+            scaledSize: new google.maps.Size(32, 32), // scaled size
+            origin: new google.maps.Point(0, 0), // origin
+            anchor: new google.maps.Point(0, 0), // anchor
+          };
+          createMarker(icon);
+        };
+
+        image.onerror = function () {
+          icon = {
+            url: "/assets/logos/default.png",
+            scaledSize: new google.maps.Size(32, 32), // scaled size
+            origin: new google.maps.Point(0, 0), // origin
+            anchor: new google.maps.Point(0, 0), // anchor
+          };
+          createMarker(icon);
+        };
+
+        function createMarker(icon) {
+          const marker = new google.maps.Marker({
+            position: myLatLng,
+            map,
+            animation: google.maps.Animation.DROP,
+            icon: icon,
+          });
+
+          var info = new google.maps.InfoWindow({
+            content:
+              "<div class=marker-label><strong>" +
+              station.name +
+              "</strong>" +
+              "<br/>" +
+              station.address +
+              "</div>",
+          });
+          marker.addListener("mouseover", function () {
+            info.open(map, this);
+          });
+          marker.addListener("mouseout", function () {
+            info.close();
+          });
+        }
       });
-    })
+    });
+  }
+
+  function error(err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+  }
+
+  navigator.geolocation.getCurrentPosition(success, error, options);
 }
 
-
-
 function fetchPetrolStations() {
-  return axios.get(`/api/stations/all`).then(res => res.data)   
+  return axios.get(`/api/stations/all`).then((res) => res.data);
 }
