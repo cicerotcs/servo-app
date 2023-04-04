@@ -13,15 +13,17 @@
         <section class="spotlight desktop">
           <div class="spotlight-header">
             <h2>Spotlight</h2>
-            <a href="">refresh</a>
+            <a href="#" id="refresh-btn">refresh</a>
           </div>
-          <div class="spotlight-content">
+          <div class="spotlight-content" id="spotlight-content">
             <div>
-              <p>Caltex dingley</p>
-              <span>625 lower...</span>
+              <p id="station-name"></p>
+              <span id="station-address"></span>
             </div>
             <div>
-              <span>img</span>
+              <div class="box-nearest">
+                <img id="station-image" src="" alt="" onerror="this.src='/assets/logos/default.png';">
+              </div>
             </div>
           </div>
         </section>
@@ -43,7 +45,7 @@
           <h2>about</h2>
           <h4>Team name: errorMakers</h4>
           <div class="about-links">
-            <p>Ak: <a href=""></a></p>
+            <p>Ak: <a href="https://github.com/Akthiha"></a></p>
             <p>Cicero: <a href="https://github.com/cicerotcs">https://github.com/cicerotcs</a></p>
             <p>Iffath: <a href="https://github.com/iffath02">https://github.com/iffath02</a></p>
             <p>Stefanus: <a href="https://github.com/Amingman">https://github.com/Amingman</a></p>
@@ -118,4 +120,44 @@
   }
 
   fetchStations();
+</script>
+
+<script>
+  const refreshBtn = document.getElementById("refresh-btn");
+  const stationNameEl = document.getElementById("station-name");
+  const stationAddressEl = document.getElementById("station-address");
+  const stationImageEl = document.getElementById("station-image");
+  const spotlightContentEl = document.getElementById("spotlight-content");
+
+  // add event listener to the refresh button
+  refreshBtn.addEventListener("click", async () => {
+    try {
+      // fetch data from the API
+      const response = await fetch("/api/stations/random");
+      const data = await response.json();
+
+      // update the station name, address, and image on the page
+      stationNameEl.innerText = data.name;
+      stationAddressEl.innerText = data.address;
+      stationImageEl.src = `/assets/logos/${data.owner.toLowerCase().replace(/[" "]/g, "-")}.png`;
+    } catch (error) {
+      console.error(error);
+    }
+  });
+
+  // show a random station when the page is loaded
+  (async () => {
+    try {
+      // fetch data from the API
+      const response = await fetch("/api/stations/random");
+      const data = await response.json();
+
+      // update the station name, address, and image on the page
+      stationNameEl.innerText = data.name;
+      stationAddressEl.innerText = data.address;
+      stationImageEl.src = `/assets/logos/${data.owner.toLowerCase().replace(/[" "]/g, "-")}.png`;
+    } catch (error) {
+      console.error(error);
+    }
+  })();
 </script>

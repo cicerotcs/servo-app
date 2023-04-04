@@ -6,11 +6,11 @@ class Random {
       "SELECT * FROM petrol_station WHERE id < 401 OFFSET floor(RANDOM() * 400) LIMIT 1;";
     try {
       const dbRes = await db.query(sql);
-      return dbRes.rows;
+      return dbRes.rows[0];
     } catch (error) {
       console.log(error);
     }
-  };
+  }
 }
 
 module.exports = Random;
