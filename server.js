@@ -2,6 +2,7 @@ const express = require("express");
 const db = require("./db/connect");
 const Stations = require("./models/stations");
 const Owners = require("./models/owners");
+const Random = require("./models/random");
 const app = express();
 
 app.set("view engine", "ejs");
@@ -22,6 +23,11 @@ app.get("/api/owners", async (req, res) => {
   const data = await Owners.owners();
   res.json(data);
 });
+
+app.get(`/api/stations/random`, async (req, res) => {
+  const data = await Random.random();
+  res.json(data)
+})
 
 const port = process.env.PORT || 8080;
 
