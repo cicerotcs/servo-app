@@ -16,8 +16,12 @@ body {
 }
 
 .left-column {
-  flex: 1;
   display: grid;
+  position: absolute;
+  height: 100%;
+  z-index: 1;
+  left: 0%;
+  width: 25%;
 }
 
 main {
@@ -25,8 +29,12 @@ main {
 }
 
 .right-column {
-  flex: 1;
+  width: 25%;
   display: grid;
+  position: absolute;
+  height: 100%;
+  z-index: 1;
+  right: 0%;
 }
 
 .spotlight {
@@ -137,3 +145,67 @@ main {
   top: 10px;
 }
 
+.left-slide-in {
+  display: grid;
+  position: absolute;
+  -webkit-animation: left-slide-in 0.5s forwards;
+  animation: left-slide-in 0.5s forwards;
+}
+
+.left-slide-out {
+  -webkit-animation: left-slide-out 0.5s forwards;
+  animation: left-slide-out 0.5s forwards;
+}
+
+
+.right-slide-in {
+  display: grid;
+  position: absolute;
+  -webkit-animation: right-slide-in 0.5s forwards;
+  animation: right-slide-in 0.5s forwards;
+}
+
+.right-slide-out {
+  -webkit-animation: right-slide-out 0.5s forwards;
+  animation: right-slide-out 0.5s forwards;
+}
+
+@keyframes left-slide-in {
+  from {
+    left: -100%;
+  }
+  to {
+    left: 0%;
+  }
+}
+
+@keyframes left-slide-out {
+  from {
+    display: grid;
+    left: 0%;
+  }
+  to {
+    display: none;
+    left: -100%;
+  }
+}
+
+@keyframes right-slide-in {
+  from {
+    right: -100%;
+  }
+  to {
+    right: 0%;
+  }
+}
+
+@keyframes right-slide-out {
+  from {
+    display: grid;
+    right: 0%;
+  }
+  to {
+    display: none;
+    right: -100%;
+  }
+}
