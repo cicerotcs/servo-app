@@ -22,7 +22,12 @@
             </div>
             <div>
               <div class="box-nearest">
-                <img id="station-image" src="" alt="" onerror="this.src='/assets/logos/default.png';">
+                <img
+                  id="station-image"
+                  src=""
+                  alt=""
+                  onerror="this.src='/assets/logos/default.png';"
+                />
               </div>
             </div>
           </div>
@@ -33,7 +38,9 @@
           <p>Total Owners: <%= stats.total_owners %></p>
           <div id="owner-stats">
             <% stats.top_stations.forEach(owner => { %>
-              <div class="box-stats"><span><%= owner.owner %></span><span><%= owner.count %></span></div>
+            <div class="box-stats">
+              <span><%= owner.owner %></span><span><%= owner.count %></span>
+            </div>
             <% }) %>
           </div>
         </section>
@@ -46,12 +53,28 @@
           <h4>Team name: errorMakers</h4>
           <div class="about-links">
             <p>Ak: <a href="https://github.com/Akthiha"></a></p>
-            <p>Cicero: <a href="https://github.com/cicerotcs">https://github.com/cicerotcs</a></p>
-            <p>Iffath: <a href="https://github.com/iffath02">https://github.com/iffath02</a></p>
-            <p>Stefanus: <a href="https://github.com/Amingman">https://github.com/Amingman</a></p>
+            <p>
+              Cicero:
+              <a href="https://github.com/cicerotcs"
+                >https://github.com/cicerotcs</a
+              >
+            </p>
+            <p>
+              Iffath:
+              <a href="https://github.com/iffath02"
+                >https://github.com/iffath02</a
+              >
+            </p>
+            <p>
+              Stefanus:
+              <a href="https://github.com/Amingman"
+                >https://github.com/Amingman</a
+              >
+            </p>
           </div>
 
-          <p>@ 2023 errorMakers<p>
+          <p>@ 2023 errorMakers</p>
+          <p></p>
         </section>
       </aside>
       <main id="map"></main>
@@ -88,38 +111,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 <script>
   const realTime = document.querySelector(".date h3");
-  const nearestSection = document.querySelector(".nearest");
 
   setInterval(() => {
     realTime.textContent = moment().format("dddd, h:mm:ss a");
   }, 1000);
-
-  function renderStations(station) {
-    const box = `
-    <div class="box-nearest">
-      <img src="/assets/logos/${station.owner
-        .toLowerCase()
-        .replace(
-          /[" "]/g,
-          "-"
-        )}.png" alt="" onerror="this.src='/assets/logos/default.png';">
-          <div>
-            <p>${station.name}</p>
-            <p>${station.address}</p>
-          </div>
-    </div>
-    `;
-    nearestSection.innerHTML += box;
-  }
-
-  async function fetchStations() {
-    const { data } = await axios.get("/api/stations/all");
-    data.slice(0, 10).forEach((station) => {
-      renderStations(station);
-    });
-  }
-
-  fetchStations();
 </script>
 
 <script>
@@ -139,7 +134,9 @@
       // update the station name, address, and image on the page
       stationNameEl.innerText = data.name;
       stationAddressEl.innerText = data.address;
-      stationImageEl.src = `/assets/logos/${data.owner.toLowerCase().replace(/[" "]/g, "-")}.png`;
+      stationImageEl.src = `/assets/logos/${data.owner
+        .toLowerCase()
+        .replace(/[" "]/g, "-")}.png`;
     } catch (error) {
       console.error(error);
     }
@@ -155,7 +152,9 @@
       // update the station name, address, and image on the page
       stationNameEl.innerText = data.name;
       stationAddressEl.innerText = data.address;
-      stationImageEl.src = `/assets/logos/${data.owner.toLowerCase().replace(/[" "]/g, "-")}.png`;
+      stationImageEl.src = `/assets/logos/${data.owner
+        .toLowerCase()
+        .replace(/[" "]/g, "-")}.png`;
     } catch (error) {
       console.error(error);
     }
