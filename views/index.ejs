@@ -9,6 +9,12 @@
   </head>
   <body>
     <div class="container">
+      <input
+      id="pac-input"
+      class="controls"
+      type="text"
+      placeholder="Search Box"
+      />
       <aside class="left-column">
         <section class="spotlight desktop">
           <div class="spotlight-header">
@@ -107,7 +113,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script
       async
-      src="https://maps.googleapis.com/maps/api/js?key=<%= apiKey %>&callback=initMap"
+      src="https://maps.googleapis.com/maps/api/js?key=<%= apiKey %>&callback=initMap&libraries=places"
     ></script>
 
     <script src="/map_api.js"></script>

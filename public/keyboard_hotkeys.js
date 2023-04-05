@@ -21,7 +21,7 @@ document.addEventListener(`keydown`, (event) => {
             rightColumn.classList.add(`right-slide-in`)
             toggleSidebar()
         } else {
-            // console.log(`sidebar off`);    
+            // console.log(`sidebar off`);
             map.classList.add(`map-full`)
             leftColumn.classList.remove(`left-slide-in`)
             leftColumn.classList.add(`left-slide-out`)
