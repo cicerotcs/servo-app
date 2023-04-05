@@ -2,6 +2,7 @@
 let markers = []
 const lat = document.querySelector(".lat");
 const lng = document.querySelector(".lng");
+const centeredAddress = document.querySelector(`.center-location strong`)
 
 const refreshBtn = document.getElementById("refresh-btn");
 const stationNameEl = document.getElementById("station-name");
@@ -40,9 +41,10 @@ async function initMap() {
 
     let markers = [];
 
-    map.addListener("drag", function () {
-      lat.textContent = `Lat: ${map.getCenter().lat()}`;
-      lng.textContent = `Lng: ${map.getCenter().lng()}`;
+    setLocationInfo()
+    
+    map.addListener("drag", async function () {
+      setLocationInfo()
     });
 
     fetchPetrolStations().then((stations) => {
@@ -119,7 +121,7 @@ async function initMap() {
         stationNameEl.innerText = data.name;
         stationAddressEl.innerText = data.address;
         stationImageEl.src = `/assets/logos/${data.owner.toLowerCase().replace(/[" "]/g, "-")}.png`;
-        
+
         const latRandom = parseFloat(data.latitude) 
         const lngRandom = parseFloat(data.longitude) 
         stationNameEl.addEventListener(`click`, async () => {
@@ -138,6 +140,20 @@ async function initMap() {
       }
     })()
 
+    async function setLocationInfo() {
+      const center = map.getCenter()
+      const currentLat = center.lat()
+      const currentLng = center.lng()
+
+      lat.textContent = `Lat: ${currentLat}`;
+      lng.textContent = `Lng: ${currentLng}`;
+
+      let key = await fetchMapKey() 
+      let stringConstructor = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${currentLat},${currentLng}&key=${key.googleMapKey}`
+
+      let data = await fetchAddressGeocoding(stringConstructor)
+      centeredAddress.textContent = data.results[0].formatted_address;
+    }
 
 
     function getBounds() {
@@ -238,8 +254,13 @@ function fetchBoundStations(n, s, e, w) {
     .then((res) => res.data);
 }
 
+async function fetchMapKey() {
+  return await axios.get(`/keys/googleMap`)
+    .then((res) => res.data);
+}
 
-
-
-
-
+function fetchAddressGeocoding(address) {
+  return axios
+    .get(address)
+    .then(res => res.data)
+}

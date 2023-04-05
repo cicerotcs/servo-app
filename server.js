@@ -48,6 +48,12 @@ app.get(`/keys/commodity`, async (req, res) => {
   res.json({commodityKey: process.env.COMMODITIES_API_KEY})
 })
 
+app.get(`/keys/googleMap`, async (req, res) => {
+  res.json({googleMapKey: process.env.MAPS_API_KEY})
+})
+
+
+
 const port = process.env.PORT || 8080;
 
 async function init() {

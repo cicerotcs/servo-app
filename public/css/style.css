@@ -102,7 +102,15 @@ main {
   background-color: #faf0e6;
   display: flex;
   justify-content: space-evenly;
-  
+  height: 100%;
+}
+
+.date span{
+  align-self: center;
+}
+
+.date h3{
+  align-self: center;
 }
 
 .center-location {
