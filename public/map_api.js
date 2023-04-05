@@ -47,8 +47,6 @@ async function initMap() {
       setLocationInfo();
     });
 
-    let obj = {};
-
     function renderStations(station, distance) {
       const box = `
       <div class="box-nearest">
@@ -68,7 +66,9 @@ async function initMap() {
 
       nearestSection.innerHTML += box;
     }
-
+    
+    let obj = {};
+    
     map.addListener("idle", async function () {
       obj.lat = map.getCenter().lat();
       obj.lng = map.getCenter().lng();
@@ -159,6 +159,8 @@ async function initMap() {
               loadIcon(station);
             });
           });
+          setLocationInfo();
+
         });
       } catch (error) {
         console.error(error);
@@ -283,6 +285,17 @@ async function initMap() {
       marker.addListener("mouseout", function () {
         info.close();
       });
+      marker.addListener(`dblclick`, function () {
+        map.setCenter({ lng: myLatLng.lng, lat: myLatLng.lat });
+
+        const [north, east, south, west] = getBounds();
+        fetchBoundStations(north, south, east, west).then((stations) => {
+          deleteMarker();
+          stations.forEach((station) => {
+            loadIcon(station);
+          });
+        });
+      })
     }
 
     // hide all the markers out of the view port
