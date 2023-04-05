@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Forum&family=Roboto&display=swap');
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -6,7 +8,9 @@
 }
 
 body {
-  font-family: sans-serif;
+  /* font-family: sans-serif; */
+  font-family: 'Forum', cursive;
+  font-family: 'Roboto', sans-serif;
 }
 
 .container {
@@ -40,7 +44,8 @@ main {
 .spotlight {
   background-color: #fee4e1;
   border: 1px solid #ccc;
-  padding: 5px;
+  padding: 10px;
+  line-height: 200%;
 }
 
 .spotlight-header {
@@ -48,16 +53,33 @@ main {
   justify-content: space-between;
 }
 
+.spotlight-header h2{
+  margin-bottom: 10px;
+}
+
 .spotlight-content {
   display: flex;
   justify-content: space-between;
 }
 
+.spotlight-content a{
+  text-decoration: none;
+  color: blue;
+  /* font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; */
+  font-size: 22px;
+}
+
+.station-name{
+  color: blue;
+}
+
 .stats {
   border: 1px solid #ccc;
-  padding: 5px;
+  padding: 10px;
   background-color: #fef0d5;
+  line-height: 200%;
 }
+
 
 .box-stats {
   display: flex;
@@ -72,9 +94,10 @@ main {
 }
 
 .latest-prices {
-  padding: 5px;
+  padding: 10px;
   border: 1px solid #ccc;
   background-color: azure;
+  line-height: 200%;
 }
 
 
@@ -89,8 +112,9 @@ main {
 }
 
 .about {
-  padding: 5px;
+  padding: 10px;
   background-color: #fff0f5;
+  line-height: 200%;
 }
 
 .about-links {
@@ -114,25 +138,40 @@ main {
 }
 
 .center-location {
-  padding: 5px;
+  padding: 10px;
   background-color: #fee4e1;
 }
 
 .center-location_coord {
   margin: 10px;
+  line-height: 200%;
 }
 
-.nearest {
+.nearest-section {
   padding: 5px;
   background-color: #faf0e6;
+}
+
+.nearest-section h2{
+  margin-bottom: 10px;
 }
 
 .box-nearest {
   display: flex;
   border: 1px solid #ccc;
+  padding: 5px;
+  line-height: 120%;
 }
 
 .box-nearest img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  margin: 5px 10px;
+  align-self: center;
+}
+
+.spotlight-image{
   width: 48px;
   height: 48px;
   object-fit: contain;
