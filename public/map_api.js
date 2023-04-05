@@ -1,7 +1,14 @@
-let map;
+// let map;
 let markers = []
 const lat = document.querySelector(".lat");
 const lng = document.querySelector(".lng");
+
+const refreshBtn = document.getElementById("refresh-btn");
+const stationNameEl = document.getElementById("station-name");
+const stationAddressEl = document.getElementById("station-address");
+const stationImageEl = document.getElementById("station-image");
+const spotlightContentEl = document.getElementById("spotlight-content");
+
 
 async function initMap() {
   const options = {
@@ -65,6 +72,73 @@ async function initMap() {
         });
       });
     });
+
+
+    // add event listener to the refresh button
+    refreshBtn.addEventListener("click", async () => {
+      try {
+        // fetch data from the API
+        const response = await fetch("/api/stations/random");
+        const data = await response.json();
+
+
+        // update the station name, address, and image on the page
+        stationNameEl.innerText = data.name;
+        stationAddressEl.innerText = data.address;
+        stationImageEl.src = `/assets/logos/${data.owner.toLowerCase().replace(/[" "]/g, "-")}.png`;
+
+        const latRandom = parseFloat(data.latitude) 
+        const lngRandom = parseFloat(data.longitude) 
+        stationNameEl.addEventListener(`click`, async () => {
+          await map.setCenter({lng: lngRandom, lat: latRandom})
+          
+          const [north, east, south, west] = getBounds();
+          fetchBoundStations(north, south, east, west).then((stations) => {
+            deleteMarker();
+            stations.forEach((station) => {
+              loadIcon(station);
+            });
+          });
+        })
+
+      } catch (error) {
+        console.error(error);
+      }
+    });
+
+
+
+        // show a random station when the page is loaded
+    (async () => {
+      try {
+        // fetch data from the API
+        const response = await fetch("/api/stations/random");
+        const data = await response.json();
+
+        // update the station name, address, and image on the page
+        stationNameEl.innerText = data.name;
+        stationAddressEl.innerText = data.address;
+        stationImageEl.src = `/assets/logos/${data.owner.toLowerCase().replace(/[" "]/g, "-")}.png`;
+        
+        const latRandom = parseFloat(data.latitude) 
+        const lngRandom = parseFloat(data.longitude) 
+        stationNameEl.addEventListener(`click`, async () => {
+          await map.setCenter({lng: lngRandom, lat: latRandom})
+          
+          const [north, east, south, west] = getBounds();
+          fetchBoundStations(north, south, east, west).then((stations) => {
+            deleteMarker();
+            stations.forEach((station) => {
+              loadIcon(station);
+            });
+          });
+        })
+      } catch (error) {
+        console.error(error);
+      }
+    })()
+
+
 
     function getBounds() {
       const northEast = map.getBounds().getNorthEast();
@@ -163,3 +237,9 @@ function fetchBoundStations(n, s, e, w) {
     .get(`/api/stations/bounds?n=${n}&s=${s}&e=${e}&w=${w}`)
     .then((res) => res.data);
 }
+
+
+
+
+
+
