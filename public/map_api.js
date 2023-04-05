@@ -1,5 +1,5 @@
 let map;
-let markers = [];
+let markers = []
 const lat = document.querySelector(".lat");
 const lng = document.querySelector(".lng");
 
