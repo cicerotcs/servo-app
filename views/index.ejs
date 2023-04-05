@@ -17,7 +17,7 @@
           </div>
           <div class="spotlight-content" id="spotlight-content">
             <div>
-              <p id="station-name"></p>
+              <a href="#"><p id="station-name"></p></a>
               <span id="station-address"></span>
             </div>
             <div>
@@ -52,6 +52,7 @@
           <h2>about</h2>
           <h4>Team name: errorMakers</h4>
           <div class="about-links">
+
             <p>Ak: <a href="https://github.com/Akthiha"></a></p>
             <p>
               Cicero:
@@ -71,6 +72,12 @@
                 >https://github.com/Amingman</a
               >
             </p>
+
+            <p>Ak: <a href="https://github.com/Akthiha">https://github.com/Akthiha</a></p>
+            <p>Cicero: <a href="https://github.com/cicerotcs">https://github.com/cicerotcs</a></p>
+            <p>Iffath: <a href="https://github.com/iffath02">https://github.com/iffath02</a></p>
+            <p>Stefanus: <a href="https://github.com/Amingman">https://github.com/Amingman</a></p>
+
           </div>
 
           <p>@ 2023 errorMakers</p>
@@ -106,6 +113,7 @@
 
     <script src="/map_api.js"></script>
     <script type="module" src="/commodity_api.js"></script>
+    <script type="module" src="/keyboard_hotkeys.js"></script>
   </body>
 </html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
@@ -115,6 +123,7 @@
   setInterval(() => {
     realTime.textContent = moment().format("dddd, h:mm:ss a");
   }, 1000);
+
 </script>
 
 <script>
@@ -160,3 +169,33 @@
     }
   })();
 </script>
+
+
+  function renderStations(station) {
+    const box = `
+    <div class="box-nearest">
+      <img src="/assets/logos/${station.owner
+        .toLowerCase()
+        .replace(
+          /[" "]/g,
+          "-"
+        )}.png" alt="" onerror="this.src='/assets/logos/default.png';">
+          <div>
+            <p>${station.name}</p>
+            <p>${station.address}</p>
+          </div>
+    </div>
+    `;
+    nearestSection.innerHTML += box;
+  }
+
+  async function fetchStations() {
+    const { data } = await axios.get("/api/stations/all");
+    data.slice(0, 10).forEach((station) => {
+      renderStations(station);
+    });
+  }
+
+  fetchStations();
+</script>
+

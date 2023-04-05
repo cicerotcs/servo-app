@@ -55,6 +55,12 @@ app.get("/api/nearest", async (req, res) => {
   res.json(data);
 });
 
+app.get(`/keys/googleMap`, async (req, res) => {
+  res.json({googleMapKey: process.env.MAPS_API_KEY})
+})
+
+
+
 const port = process.env.PORT || 8080;
 
 async function init() {

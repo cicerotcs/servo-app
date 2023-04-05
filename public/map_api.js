@@ -1,6 +1,13 @@
 const lat = document.querySelector(".lat");
 const lng = document.querySelector(".lng");
+const centeredAddress = document.querySelector(`.center-location strong`)
+const refreshBtn = document.getElementById("refresh-btn");
+const stationNameEl = document.getElementById("station-name");
+const stationAddressEl = document.getElementById("station-address");
+const stationImageEl = document.getElementById("station-image");
+const spotlightContentEl = document.getElementById("spotlight-content");
 const nearestSection = document.querySelector(".nearest");
+
 
 async function initMap() {
   const options = {
@@ -31,6 +38,7 @@ async function initMap() {
     });
 
     let markers = [];
+
 
     let obj = {};
 
@@ -117,6 +125,122 @@ async function initMap() {
         });
       });
     });
+
+
+    setLocationInfo()
+    
+    map.addListener("drag", async function () {
+      setLocationInfo()
+    });
+
+    fetchPetrolStations().then((stations) => {
+      stations.forEach((station) => {
+        loadIcon(station);
+      });
+    });
+
+    map.addListener(`dragend`, function () {
+      const [north, east, south, west] = getBounds();
+
+      fetchBoundStations(north, south, east, west).then((stations) => {
+        deleteMarker();
+        stations.forEach((station) => {
+          loadIcon(station);
+        });
+      });
+    });
+
+    map.addListener(`zoom_changed`, function () {
+      const [north, east, south, west] = getBounds();
+
+      fetchBoundStations(north, south, east, west).then((stations) => {
+        deleteMarker();
+        stations.forEach((station) => {
+          loadIcon(station);
+        });
+      });
+    });
+
+
+    // add event listener to the refresh button
+    refreshBtn.addEventListener("click", async () => {
+      try {
+        // fetch data from the API
+        const response = await fetch("/api/stations/random");
+        const data = await response.json();
+
+
+        // update the station name, address, and image on the page
+        stationNameEl.innerText = data.name;
+        stationAddressEl.innerText = data.address;
+        stationImageEl.src = `/assets/logos/${data.owner.toLowerCase().replace(/[" "]/g, "-")}.png`;
+
+        const latRandom = parseFloat(data.latitude) 
+        const lngRandom = parseFloat(data.longitude) 
+        stationNameEl.addEventListener(`click`, async () => {
+          await map.setCenter({lng: lngRandom, lat: latRandom})
+          
+          const [north, east, south, west] = getBounds();
+          fetchBoundStations(north, south, east, west).then((stations) => {
+            deleteMarker();
+            stations.forEach((station) => {
+              loadIcon(station);
+            });
+          });
+        })
+
+      } catch (error) {
+        console.error(error);
+      }
+    });
+
+
+
+        // show a random station when the page is loaded
+    (async () => {
+      try {
+        // fetch data from the API
+        const response = await fetch("/api/stations/random");
+        const data = await response.json();
+
+        // update the station name, address, and image on the page
+        stationNameEl.innerText = data.name;
+        stationAddressEl.innerText = data.address;
+        stationImageEl.src = `/assets/logos/${data.owner.toLowerCase().replace(/[" "]/g, "-")}.png`;
+
+        const latRandom = parseFloat(data.latitude) 
+        const lngRandom = parseFloat(data.longitude) 
+        stationNameEl.addEventListener(`click`, async () => {
+          await map.setCenter({lng: lngRandom, lat: latRandom})
+          
+          const [north, east, south, west] = getBounds();
+          fetchBoundStations(north, south, east, west).then((stations) => {
+            deleteMarker();
+            stations.forEach((station) => {
+              loadIcon(station);
+            });
+          });
+        })
+      } catch (error) {
+        console.error(error);
+      }
+    })()
+
+    async function setLocationInfo() {
+      const center = map.getCenter()
+      const currentLat = center.lat()
+      const currentLng = center.lng()
+
+      lat.textContent = `Lat: ${currentLat}`;
+      lng.textContent = `Lng: ${currentLng}`;
+
+      let key = await fetchMapKey() 
+      let stringConstructor = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${currentLat},${currentLng}&key=${key.googleMapKey}`
+
+      let data = await fetchAddressGeocoding(stringConstructor)
+      centeredAddress.textContent = data.results[0].formatted_address;
+    }
+
 
     function getBounds() {
       const northEast = map.getBounds().getNorthEast();
@@ -231,8 +355,21 @@ function fetchBoundStations(n, s, e, w) {
     .then((res) => res.data);
 }
 
+
 function fetchNearStations(lat, lng) {
   return axios
     .get(`/api/nearest?lat=${lat}&lng=${lng}&radius=${6371}`)
     .then((res) => res.data);
 }
+
+async function fetchMapKey() {
+  return await axios.get(`/keys/googleMap`)
+    .then((res) => res.data);
+}
+
+function fetchAddressGeocoding(address) {
+  return axios
+    .get(address)
+    .then(res => res.data)
+}
+
