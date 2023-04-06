@@ -265,3 +265,55 @@ main {
     right: -100%;
   }
 }
+.owner-name {
+  color: blue;
+}
+
+.owner-count {
+  color: red;
+}
+
+.table-container {
+  display: flex;
+  flex-direction: column;
+  height: 70%; /* Set the height of the table */
+  overflow: hidden;
+}
+
+.table-container .box-stats {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 5px;
+  margin-bottom: 5px;
+  transform-origin: top center;
+  transition: transform 0.5s ease-in-out;
+  height: calc(70% / 7); /* Divide the height of the table by the number of rows */
+}
+
+.table-container .box-stats:nth-child(odd) {
+  background-color: mistyrose;
+  color: #fff;
+}
+
+.table-container .box-stats:nth-child(even) {
+  background-color: #fff;
+  color: #fff;
+}
+
+.table-container .box-stats:hover {
+  animation: none;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.table-container.rotate .box-stats {
+  transform: rotateX(90deg);
+}
+
+@keyframes rotate {
+  from {
+    transform: rotateX(0);
+  }
+  to {
+    transform: rotateX(90deg);
+  }
+}
