@@ -96,7 +96,7 @@ main {
 .latest-prices {
   padding: 10px;
   border: 1px solid #ccc;
-  background-color: azure;
+  background-color: #A5C8D1;
   line-height: 200%;
 }
 
@@ -113,7 +113,7 @@ main {
 
 .about {
   padding: 10px;
-  background-color: #fff0f5;
+  background-color: #fee4e1;
   line-height: 200%;
 }
 
@@ -123,7 +123,7 @@ main {
 
 .date {
   padding: 5px;
-  background-color: #faf0e6;
+  background-color: #FFE7C7;
   display: flex;
   justify-content: space-evenly;
   height: 100%;
@@ -139,7 +139,8 @@ main {
 
 .center-location {
   padding: 10px;
-  background-color: #fee4e1;
+  /* background-color: #fee4e1; */
+  background-color: mistyrose;;
 }
 
 .center-location_coord {
@@ -149,7 +150,7 @@ main {
 
 .nearest-section {
   padding: 5px;
-  background-color: #faf0e6;
+  background-color: #fef0d5;
 }
 
 .nearest-section h2{
@@ -171,7 +172,7 @@ main {
   align-self: center;
 }
 
-.spotlight-image{
+.spotlight-image img{
   width: 48px;
   height: 48px;
   object-fit: contain;
