@@ -193,6 +193,7 @@ async function initMap() {
               loadIcon(station);
             });
           });
+          setLocationInfo();
         });
       } catch (error) {
         console.error(error);
@@ -295,6 +296,7 @@ async function initMap() {
             loadIcon(station);
           });
         });
+        setLocationInfo();
       })
     }
 
