@@ -346,3 +346,38 @@ main {
 #target {
   width: 345px;
 }
+.owner-name {
+  color: blue;
+}
+
+.owner-count {
+  color: red;
+}
+
+.table-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Set the height of the table */
+  overflow: hidden;
+}
+
+.table-container .box-stats {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 5px;
+  margin-bottom: 5px;
+  transform-origin: top center;
+  height: calc(70% / 7); /* Divide the height of the table by the number of rows */
+}
+
+.table-container .box-stats:nth-child(odd) {
+  background-color: mistyrose;
+  color: #fff;
+}
+
+.table-container .box-stats:nth-child(even) {
+  background-color: #fff;
+  color: #fff;
+}
+
+
