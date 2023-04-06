@@ -66,9 +66,9 @@ async function initMap() {
 
       nearestSection.innerHTML += box;
     }
-    
+
     let obj = {};
-    
+
     map.addListener("idle", async function () {
       obj.lat = map.getCenter().lat();
       obj.lng = map.getCenter().lng();
@@ -160,7 +160,6 @@ async function initMap() {
             });
           });
           setLocationInfo();
-
         });
       } catch (error) {
         console.error(error);
@@ -212,7 +211,18 @@ async function initMap() {
       let stringConstructor = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${currentLat},${currentLng}&key=${key.googleMapKey}`;
 
       let data = await fetchAddressGeocoding(stringConstructor);
-      centeredAddress.textContent = data.results[0].formatted_address;
+
+      let address;
+
+      if (data.results[0].formatted_address.includes("+")) {
+        address = data.results[0].formatted_address
+          .split("+")
+          .slice(1)
+          .join(" ");
+      } else {
+        address = data.results[0].formatted_address;
+      }
+      centeredAddress.textContent = address;
     }
 
     function getBounds() {
@@ -297,7 +307,7 @@ async function initMap() {
           });
         });
         setLocationInfo();
-      })
+      });
     }
 
     // hide all the markers out of the view port
@@ -321,7 +331,6 @@ async function initMap() {
       }
       markers = [];
     }
-
 
     // SEARCH BOX USING PLACES FROM Googlemap API
     // Create the search box and link it to the UI element.
@@ -386,9 +395,6 @@ async function initMap() {
       });
       map.fitBounds(bounds);
     });
-
-
-
   }
 
   function error(err) {
