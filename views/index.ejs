@@ -10,10 +10,10 @@
   <body>
     <div class="container">
       <input
-      id="pac-input"
-      class="controls"
-      type="text"
-      placeholder="Search Box"
+        id="pac-input"
+        class="controls"
+        type="text"
+        placeholder="Search Box"
       />
       <aside class="left-column">
         <section class="spotlight desktop">
@@ -91,7 +91,7 @@
       <main id="map"></main>
       <aside class="right-column">
         <section class="date mobile">
-          <span><img src="/assets/schedule.png" alt=""></span>
+          <span><img src="/assets/schedule.png" alt="" /></span>
           <h3></h3>
         </section>
         <section class="center-location">
@@ -124,6 +124,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 <script>
   const realTime = document.querySelector(".date h3");
+  const latestPrice = document.querySelector(".latest-prices small ");
+  latestPrice.textContent = moment().format("MMM Do YY");
 
   setInterval(() => {
     realTime.textContent = moment().format("dddd, h:mm:ss a");
