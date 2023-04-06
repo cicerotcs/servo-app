@@ -1,5 +1,5 @@
 let endpoint = "latest";
-const latestSection = document.querySelector(`.latest-prices`);
+const latestSection = document.querySelector(`.latest-prices-div`);
 
 async function fetchCommodity() {
   let key = await fetchKey();
@@ -34,8 +34,6 @@ function fetchGas(key) {
 
 function renderCommodity(object) {
   latestSection.innerHTML = `
-    <h2>latest prices</h2>
-    <small>2023-03-08</small>
     <div class="latest-prices_info WTI">
     <p>WTI oil ${toUSD(object.oil.WTIOIL)} USD per barrel &nbsp;</p>
     <img src="./assets/petroleum.png" alt="" class ="petroleum-icon">
@@ -55,3 +53,49 @@ function toUSD(value) {
 }
 
 fetchCommodity();
+
+
+setTimeout(function () {
+    let timer = 0
+    setInterval(function () {
+      if (timer == 0) {
+        document.querySelector(`.WTI`).classList.add(`rotate`)
+      } else {
+        document.querySelector(`.WTI`).classList.remove(`rotate`)
+      }
+      timer++
+      if (timer == 3) {
+        timer = 0
+      }
+    }, 5000)
+  }, 0)
+  
+  setTimeout(function () {
+    let timer = 0
+    setInterval(function () {
+      if (timer == 0) {
+        document.querySelector(`.BRENT`).classList.add(`rotate`)
+      } else {
+        document.querySelector(`.BRENT`).classList.remove(`rotate`)
+      }
+      timer++
+      if (timer == 3) {
+        timer = 0
+      }
+    }, 5000)
+  }, 5000)
+  
+  setTimeout(function () {
+    let timer = 0
+    setInterval(function () {
+      if (timer == 0) {
+        document.querySelector(`.NG`).classList.add(`rotate`)
+      } else {
+        document.querySelector(`.NG`).classList.remove(`rotate`)
+      }
+      timer++
+      if (timer == 3) {
+        timer = 0
+      }
+    }, 5000)
+  }, 10000)

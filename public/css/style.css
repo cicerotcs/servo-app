@@ -53,7 +53,7 @@ main {
 
 .spotlight {
   background-color: #fee4e1;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   padding: 10px;
   line-height: 200%;
 }
@@ -84,7 +84,7 @@ main {
 }
 
 .stats {
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   padding: 10px;
   background-color: #fef0d5;
   line-height: 200%;
@@ -94,8 +94,8 @@ main {
 .box-stats {
   display: flex;
   justify-content: space-between;
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
+  /* border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc; */
   background-color: #fde4c4;
 }
 
@@ -105,20 +105,24 @@ main {
 
 .latest-prices {
   padding: 10px;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   background-color: #A5C8D1;
   line-height: 200%;
 }
 
 
 .latest-prices_info {
-  display: flex;
+  display: none;
   /* justify-content: space-between; */
   margin-top: 5px;
 }
 
+.latest-prices-div {
+  transition: transform 0.5s ease-in-out;
+}
+
 .petroleum-icon {
-  width: 1em;
+  width: 2em;
 }
 
 .about {
@@ -215,6 +219,7 @@ main {
 }
 
 .left-slide-out {
+  display: none;
   -webkit-animation: left-slide-out 0.5s forwards;
   animation: left-slide-out 0.5s forwards;
 }
@@ -228,6 +233,7 @@ main {
 }
 
 .right-slide-out {
+  display: none;
   -webkit-animation: right-slide-out 0.5s forwards;
   animation: right-slide-out 0.5s forwards;
 }
@@ -381,3 +387,25 @@ main {
 }
 
 
+
+.WTI.rotate {
+  display: flex;
+  transform: translateX(90deg);
+}
+.BRENT.rotate {
+  display: flex;
+  transform: translateX(90deg);
+}
+.NG.rotate {
+  display: flex;
+  transform: translateX(90deg);
+}
+
+@keyframes rotate {
+  from {
+    transform: rotateX(0);
+  }
+  to {
+    transform: rotateX(90deg);
+  }
+}
