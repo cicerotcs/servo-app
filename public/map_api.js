@@ -57,9 +57,11 @@ async function initMap() {
             "-"
           )}.png" alt="" onerror="this.src='/assets/logos/default.png';">
             <div>
-              <p>${station.name}</p>
-              <p>${station.address}</p>
-              <p>${Math.abs(distance).toFixed(2)} m</p>
+              <div style="margin-bottom:5px"> 
+                <p>${station.name}</p>
+                <p>${station.address}</p>
+              </div>
+              <strong>${Math.abs(distance).toFixed(2)} m</strong>
             </div>
       </div>
       `;
