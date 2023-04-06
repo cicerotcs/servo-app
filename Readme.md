@@ -58,7 +58,6 @@ Displayed the top-10 nearest petrol station from the center point of the map for
 Uses | Hotkey
 -------|-------
 Hide the sidebars | Ctrl + B
-Dark Mode | Ctrl + D
 
 ### 9. Markers Manipulation
 - Double-click on a marker on the map to recenter the map to its location.
