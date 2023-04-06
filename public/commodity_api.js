@@ -36,15 +36,15 @@ function renderCommodity(object) {
   latestSection.innerHTML = `
     <h2>latest prices</h2>
     <small>2023-03-08</small>
-    <div class="latest-prices_info">
+    <div class="latest-prices_info WTI">
     <p>WTI oil ${toUSD(object.oil.WTIOIL)} USD per barrel &nbsp;</p>
     <img src="./assets/petroleum.png" alt="" class ="petroleum-icon">
     </div>
-    <div class="latest-prices_info">
+    <div class="latest-prices_info BRENT">
     <span>Brent oil ${toUSD(object.oil.BRENTOIL)} USD per barrel &nbsp;</span>
     <img src="./assets/petroleum.png" alt="" class ="petroleum-icon">
     </div>
-    <div class="latest-prices_info">
+    <div class="latest-prices_info NG">
     <span>Natural gas ${toUSD(object.gas.NG)} USD per MMBtu</span>
     </div>
     `;
