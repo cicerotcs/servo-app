@@ -16,7 +16,7 @@
         placeholder="Search Box"
       />
       <aside class="left-column">
-        <section class="spotlight desktop">
+        <section class="spotlight default-background border-bottom">
           <div class="spotlight-header">
             <h2>Spotlight</h2>
             <a href="#" id="refresh-btn">refresh</a>
@@ -38,29 +38,25 @@
             </div>
           </div>
         </section>
-        <section class="stats desktop">
+        <section class="stats default-background border-bottom">
           <h2>Stats</h2>
           <p>Total Stations: <%= stats.total_stations %></p>
           <p>Total Owners: <%= stats.total_owners %></p>
           <div id="owner-stats" class="table-container">
-            <% let index = 0; %>
-            <% stats.top_stations.forEach(owner => { %>
+            <% let index = 0; %> <% stats.top_stations.forEach(owner => { %>
             <div class="box-stats owner-<%= index %>">
               <span class="owner-name"><%= owner.owner %></span>
               <span class="owner-count"><%= owner.count %></span>
             </div>
-            <% index++; %>
-            <% }) %>
+            <% index++; %> <% }) %>
           </div>
         </section>
-        <section class="latest-prices desktop">
-          <h2>Latest Prices</h2>
-          <small>2023-03-08</small>
-          <div class="latest-prices-div">
-            
-          </div>
+        <section class="latest-prices default-background border-bottom">
+          <h2>Latest Oil Prices</h2>
+          <small></small>
+          <div class="latest-prices-div"></div>
         </section>
-        <section class="about desktop">
+        <section class="about default-background border-bottom">
           <h2>About</h2>
           <h4>Team name: errorMakers</h4>
           <div class="about-links">
@@ -96,11 +92,11 @@
       </aside>
       <main id="map"></main>
       <aside class="right-column">
-        <section class="date mobile">
+        <section class="date default-background border-bottom">
           <span><img src="/assets/schedule.png" alt="" /></span>
           <h3></h3>
         </section>
-        <section class="center-location">
+        <section class="center-location default-background border-bottom">
           <h2>Map Center Location</h2>
           <div class="center-location_coord">
             <p class="lat">Lat: -25.363</p>
@@ -109,7 +105,7 @@
 
           <strong>92 bignell...</strong>
         </section>
-        <section class="nearest-section">
+        <section class="nearest-section default-background border-bottom">
           <h2>Nearest</h2>
           <div class="nearest"></div>
         </section>

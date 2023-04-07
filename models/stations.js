@@ -1,9 +1,15 @@
 const db = require("../db/connect");
+const BadRequestError = require("../errors/bad-request");
 
 class Stations {
   static all = async () => {
     let sql = "select * from petrol_station where id < 701";
     const dbRes = await db.query(sql);
+    if (dbRes.rows.length === 0) {
+      throw new BadRequestError(
+        "Sorry, the database does not contain any petrol station records. Please run the readCsv file to import the data."
+      );
+    }
     return dbRes.rows;
   };
 

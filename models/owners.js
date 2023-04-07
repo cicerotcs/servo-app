@@ -1,15 +1,15 @@
 const db = require("../db/connect");
+const NotFoundError = require("../errors/not-found");
 
 class Owners {
   static owners = async () => {
     let sql =
       "select distinct on(owner) owner from petrol_station order by owner, id;";
-    try {
-      const dbRes = await db.query(sql);
-      return dbRes.rows;
-    } catch (error) {
-      console.log(error);
+    const dbRes = await db.query(sql);
+    if (dbRes.rows.length === 0) {
+      throw new NotFoundError("Owners not found");
     }
+    return dbRes.rows;
   };
 }
 
