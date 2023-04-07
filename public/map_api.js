@@ -1,4 +1,3 @@
-// let map;
 const lat = document.querySelector(".lat");
 const lng = document.querySelector(".lng");
 const centeredAddress = document.querySelector(`.center-location strong`);
@@ -8,7 +7,6 @@ const stationNameEl = document.getElementById("station-name");
 const stationAddressEl = document.getElementById("station-address");
 const stationImageEl = document.getElementById("station-image");
 const spotlightContentEl = document.getElementById("spotlight-content");
-
 const nearestSection = document.querySelector(".nearest");
 
 async function initMap() {
@@ -135,71 +133,46 @@ async function initMap() {
       });
     });
 
+    async function generateRandomStation() {
+      try {
+        // fetch data from the API
+        const response = await fetch("/api/stations/random");
+        const data = await response.json();
+
+        // update the station name, address, and image on the page
+        stationNameEl.innerText = data.name;
+        stationAddressEl.innerText = data.address;
+        stationImageEl.src = `/assets/logos/${data.owner
+          .toLowerCase()
+          .replace(/[" "]/g, "-")}.png`;
+
+        const latRandom = parseFloat(data.latitude);
+        const lngRandom = parseFloat(data.longitude);
+        stationNameEl.addEventListener(`click`, async () => {
+          await map.setCenter({ lng: lngRandom, lat: latRandom });
+
+          const [north, east, south, west] = getBounds();
+          fetchBoundStations(north, south, east, west).then((stations) => {
+            deleteMarker();
+            stations.forEach((station) => {
+              loadIcon(station);
+            });
+          });
+          setLocationInfo();
+        });
+      } catch (err) {
+        const message = document.createElement("span");
+        message.textContent = err.response.data.msg;
+        spotlightContentEl.append(message);
+      }
+    }
+
     // add event listener to the refresh button
     refreshBtn.addEventListener("click", async () => {
-      try {
-        // fetch data from the API
-        const response = await fetch("/api/stations/random");
-        const data = await response.json();
-
-        // update the station name, address, and image on the page
-        stationNameEl.innerText = data.name;
-        stationAddressEl.innerText = data.address;
-        stationImageEl.src = `/assets/logos/${data.owner
-          .toLowerCase()
-          .replace(/[" "]/g, "-")}.png`;
-
-        const latRandom = parseFloat(data.latitude);
-        const lngRandom = parseFloat(data.longitude);
-        stationNameEl.addEventListener(`click`, async () => {
-          await map.setCenter({ lng: lngRandom, lat: latRandom });
-
-          const [north, east, south, west] = getBounds();
-          fetchBoundStations(north, south, east, west).then((stations) => {
-            deleteMarker();
-            stations.forEach((station) => {
-              loadIcon(station);
-            });
-          });
-          setLocationInfo();
-        });
-      } catch (error) {
-        console.error(error);
-      }
+      await generateRandomStation();
     });
-
-    // show a random station when the page is loaded
-    (async () => {
-      try {
-        // fetch data from the API
-        const response = await fetch("/api/stations/random");
-        const data = await response.json();
-
-        // update the station name, address, and image on the page
-        stationNameEl.innerText = data.name;
-        stationAddressEl.innerText = data.address;
-        stationImageEl.src = `/assets/logos/${data.owner
-          .toLowerCase()
-          .replace(/[" "]/g, "-")}.png`;
-
-        const latRandom = parseFloat(data.latitude);
-        const lngRandom = parseFloat(data.longitude);
-        stationNameEl.addEventListener(`click`, async () => {
-          await map.setCenter({ lng: lngRandom, lat: latRandom });
-
-          const [north, east, south, west] = getBounds();
-          fetchBoundStations(north, south, east, west).then((stations) => {
-            deleteMarker();
-            stations.forEach((station) => {
-              loadIcon(station);
-            });
-          });
-          setLocationInfo();
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    })();
+    // generate a random station when page loaded
+    generateRandomStation();
 
     async function setLocationInfo() {
       const center = map.getCenter();
@@ -425,6 +398,6 @@ function fetchAddressGeocoding(address) {
 }
 function fetchNearStations(lat, lng) {
   return axios
-    .get(`/api/nearest?lat=${lat}&lng=${lng}&radius=${6371}`)
+    .get(`/api/stations/nearest?lat=${lat}&lng=${lng}&radius=${6371}`)
     .then((res) => res.data);
 }
